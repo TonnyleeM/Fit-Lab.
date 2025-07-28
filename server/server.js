@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const User = require('./models/User');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 // Routes
 
 // Setup
@@ -57,26 +58,60 @@ app.post('/api/auth/login', async (req, res) => {
   console.log('Login attempt for:', email);
   try {
     if (!email || !password) {
-      return res.status(400).json({ message: 'Email and password are required.' });
+      return res.status(400).json({ success: false, message: 'Email and password are required.' });
     }
     const user = await User.findOne({ email });
     if (!user) {
       console.log('Login failed: user not found');
-      return res.status(401).json({ message: 'Invalid email or password.' });
+      return res.status(401).json({ success: false, message: 'Invalid email or password.' });
     }
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       console.log('Login failed: incorrect password');
-      return res.status(401).json({ message: 'Invalid email or password.' });
+      return res.status(401).json({ success: false, message: 'Invalid email or password.' });
     }
+    // Generate JWT token
+    const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET || 'your-secret-key', { expiresIn: '7d' });
+    
     // Remove password from user object before sending
     const userData = user.toObject();
     delete userData.password;
     console.log('Login successful for:', email);
-    res.json({ message: 'Login successful!', user: userData });
+    res.json({ 
+      success: true, 
+      message: 'Login successful!', 
+      user: userData,
+      token: token
+    });
   } catch (err) {
     console.error('Login error:', err);
-    res.status(500).json({ message: 'Server error during login.' });
+    res.status(500).json({ success: false, message: 'Server error during login.' });
+  }
+});
+
+// Add JWT verification endpoint
+app.get('/api/auth/verify', async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ success: false, message: 'No token provided.' });
+    }
+    
+    const token = authHeader.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+    
+    const user = await User.findById(decoded.userId);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found.' });
+    }
+    
+    const userData = user.toObject();
+    delete userData.password;
+    
+    res.json({ success: true, user: userData });
+  } catch (err) {
+    console.error('Token verification error:', err);
+    res.status(401).json({ success: false, message: 'Invalid token.' });
   }
 });
 
