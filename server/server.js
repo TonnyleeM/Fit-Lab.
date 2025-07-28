@@ -3,21 +3,85 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
-
+const User = require('./models/User');
+const bcrypt = require('bcrypt');
 // Routes
-const authRoutes = require('./routes/auth');
 
 // Setup
 dotenv.config();
 const app = express();
-app.use(cors());
-app.use(express.json());
+app.use(cors()); // Ensure CORS is enabled before all routes
+app.use(express.json()); // Ensure JSON body parsing is enabled
 
 // Routes
-app.use('/api/auth', authRoutes);
+app.post('/api/auth/register', async (req, res) => {
+  console.log('Received registration request from:', req.ip);
+  console.log('Request body:', req.body);
+  try {
+    const { name, age, email, password, fitnessGoal, experience, workoutTime, dietaryPreference } = req.body;
+
+    if (!name || !age || !email || !password || !fitnessGoal || !experience) {
+      return res.status(400).json({ message: 'All required fields must be provided.' });
+    }
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'User with this email already exists.' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = new User({
+      name,
+      age,
+      email,
+      password: hashedPassword,
+      fitnessGoal,
+      experience,
+      workoutTime,
+      dietaryPreference
+    });
+
+    await user.save();
+
+    res.status(201).json({ message: 'User registered successfully!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error during registration.' });
+  }
+});
+
+// Login endpoint
+app.post('/api/auth/login', async (req, res) => {
+  const { email, password } = req.body;
+  console.log('Login attempt for:', email);
+  try {
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Email and password are required.' });
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      console.log('Login failed: user not found');
+      return res.status(401).json({ message: 'Invalid email or password.' });
+    }
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      console.log('Login failed: incorrect password');
+      return res.status(401).json({ message: 'Invalid email or password.' });
+    }
+    // Remove password from user object before sending
+    const userData = user.toObject();
+    delete userData.password;
+    console.log('Login successful for:', email);
+    res.json({ message: 'Login successful!', user: userData });
+  } catch (err) {
+    console.error('Login error:', err);
+    res.status(500).json({ message: 'Server error during login.' });
+  }
+});
 
 // Connect to DB and start server
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => {
     console.log('MongoDB connected');
     app.listen(3000, () => console.log('Server running on http://localhost:3000'));

@@ -141,6 +141,8 @@ async function handleSignup(e) {
     const dietaryPreference = document.getElementById('dietary-preference').value;
     const messageBox = document.getElementById('message');
 
+    // The backend API endpoint must match the running Node.js server
+    console.log('Submitting registration data:', { name, age, email, password, fitnessGoal, experience, workoutTime, dietaryPreference });
     try {
         const response = await fetch('http://localhost:3000/api/auth/register', {
             method: 'POST',
@@ -148,7 +150,7 @@ async function handleSignup(e) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                username: name,
+                name, // changed from username to name
                 email,
                 password,
                 age,
@@ -166,7 +168,7 @@ async function handleSignup(e) {
             messageBox.textContent = '✅ Account created successfully! Redirecting to login...';
             messageBox.style.display = 'block';
             setTimeout(() => {
-                window.location.href = "login.html";
+                window.location.href = "Dashboard/dashboard.html";
             }, 2000);
         } else {
             messageBox.className = 'message error';
