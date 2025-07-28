@@ -1,5 +1,5 @@
 // API Configuration
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = 'https://your-render-backend-url.onrender.com/api';
 
 // Initialize login page
 document.addEventListener('DOMContentLoaded', function() {

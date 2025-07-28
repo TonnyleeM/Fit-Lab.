@@ -8,11 +8,11 @@ document.addEventListener('DOMContentLoaded', function() {
 // Check if user is authenticated, redirect if not
 function checkAuthenticationAndRedirect() {
     const token = localStorage.getItem('fitlab_token');
-    if (!token) {
-        alert('Please log in to access the dashboard');
-        window.location.href = '../login.html';
-        return;
-    }
+    //if (!token) {
+      //  alert('Please log in to access the dashboard');
+        //window.location.href = '../login.html';
+        //return;
+    //}
     // Always verify token and user with backend
     verifyAuthTokenAndUser();
 }
@@ -21,7 +21,7 @@ function checkAuthenticationAndRedirect() {
 async function verifyAuthTokenAndUser() {
     try {
         const token = localStorage.getItem('fitlab_token');
-        const response = await fetch('http://localhost:3000/api/auth/verify', {
+        const response = await fetch('https://your-render-backend-url.onrender.com/api/auth/verify', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
