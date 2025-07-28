@@ -8,21 +8,17 @@ document.addEventListener('DOMContentLoaded', function() {
 // Check if user is authenticated, redirect if not
 function checkAuthenticationAndRedirect() {
     const token = localStorage.getItem('fitlab_token');
-    const user = localStorage.getItem('fitlab_user');
-    
-    if (!token || !user) {
-        // No authentication found, redirect to login
+    if (!token) {
         alert('Please log in to access the dashboard');
-        window.location.href = '../index.html'; // Adjust path as needed
+        window.location.href = '../login.html';
         return;
     }
-    
-    // Optional: Verify token with backend
-    verifyAuthToken();
+    // Always verify token and user with backend
+    verifyAuthTokenAndUser();
 }
 
-// Verify authentication token with backend
-async function verifyAuthToken() {
+// Verify authentication token and user with backend
+async function verifyAuthTokenAndUser() {
     try {
         const token = localStorage.getItem('fitlab_token');
         const response = await fetch('http://localhost:3000/api/auth/verify', {
@@ -32,40 +28,42 @@ async function verifyAuthToken() {
                 'Content-Type': 'application/json'
             }
         });
-        
         const data = await response.json();
-        if (!data.success) {
-            // Token is invalid, remove it and redirect
+        if (!data.success || !data.user) {
+            // Token is invalid or user not found, remove and redirect
             localStorage.removeItem('fitlab_token');
             localStorage.removeItem('fitlab_user');
-            alert('Your session has expired. Please log in again.');
-            window.location.href = '../index.html';
+            alert('Your session has expired or your account is invalid. Please log in again.');
+            window.location.href = '../login.html';
+            return;
         }
+        // Store the latest user info from DB
+        localStorage.setItem('fitlab_user', JSON.stringify(data.user));
+        initializeDashboard();
     } catch (error) {
         console.error('Token verification failed:', error);
-        // Continue with cached user data if server is unreachable
+        alert('Unable to verify your session. Please log in again.');
+        localStorage.removeItem('fitlab_token');
+        localStorage.removeItem('fitlab_user');
+        window.location.href = '../login.html';
     }
 }
 
 function initializeDashboard() {
-    // Get authenticated user data
+    // Get authenticated user data from localStorage (synced with DB)
     const user = JSON.parse(localStorage.getItem('fitlab_user') || '{}');
     const token = localStorage.getItem('fitlab_token');
-    
-    if (!token || !user.username) {
+    if (!token || !user.name) {
         console.error('No valid user session found');
         return;
     }
-
     // Update welcome message with real user data
     const welcomeMsg = document.getElementById('user-welcome');
     if (welcomeMsg) {
-        welcomeMsg.textContent = `Welcome back, ${user.username}!`;
+        welcomeMsg.textContent = `Welcome back, ${user.name}!`;
     }
-
     // Update stats with user-specific or realistic data
     updateDashboardStats();
-    
     // Load user-specific content based on fitness goals
     loadPersonalizedContent(user);
 }
@@ -148,7 +146,7 @@ function logout() {
         alert('You have been logged out successfully');
         
         // Redirect to login/home page
-        window.location.href = '../index.html'; // Adjust path as needed
+        window.location.href = '../login.html'; // Redirect to login page
     }
 }
 
