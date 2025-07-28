@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitLab Dashboard - Your Fitness Journey</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">Fit Lab</div>
+        <div class="nav-right">
+            <span class="user-welcome" id="user-welcome">Welcome back!</span>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+            <h2>🏃‍♂️ Your Fitness Journey Continues</h2>
+            <p>Track your progress, stay motivated, and achieve your health goals with FitLab</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">🔥</div>
+                <div class="stat-number" id="calories-burned">1,240</div>
+                <div class="stat-label">Calories Burned This Week</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💪</div>
+                <div class="stat-number" id="workouts-completed">12</div>
+                <div class="stat-label">Workouts Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⏱️</div>
+                <div class="stat-number" id="workout-time">45</div>
+                <div class="stat-label">Minutes Average Workout</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-number" id="goal-progress">78</div>
+                <div class="stat-label">% Goal Progress</div>
+            </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="features-grid">
+            <!-- Workout Videos -->
+            <div class="feature-card">
+                <div class="feature-header">
+                    <h3>🎥 Featured Workouts</h3>
+                    <p>Professional video routines</p>
+                </div>
+                <div class="feature-content">
+                    <div class="video-list">
+                        <div class="video-item" onclick="watchVideo('https://www.youtube.com/watch?v=9rKtfaZCkZQ')">
+                            <div class="video-thumbnail">
+                                <span class="play-icon">▶️</span>
+                                <img src="https://img.youtube.com/vi/9rKtfaZCkZQ/mqdefault.jpg" alt="Weight Loss Workout">
+                            </div>
+                            <div class="video-info">
+                                <strong>Weight Loss Workout</strong><br>
+                                <small>Full body fat burning routine</small>
+                            </div>
+                        </div>
+                        <div class="video-item" onclick="watchVideo('https://www.youtube.com/watch?v=1y2pbhUCy28')">
+                            <div class="video-thumbnail">
+                                <span class="play-icon">▶️</span>
+                                <img src="https://img.youtube.com/vi/1y2pbhUCy28/mqdefault.jpg" alt="Muscle Building">
+                            </div>
+                            <div class="video-info">
+                                <strong>Muscle Building</strong><br>
+                                <small>Strength training routine</small>
+                            </div>
+                        </div>
+                        <div class="video-item" onclick="watchVideo('https://www.youtube.com/watch?v=yWnacRo2VbA')">
+                            <div class="video-thumbnail">
+                                <span class="play-icon">▶️</span>
+                                <img src="https://img.youtube.com/vi/yWnacRo2VbA/mqdefault.jpg" alt="Cardio Workout">
+                            </div>
+                            <div class="video-info">
+                                <strong>Cardio Workout</strong><br>
+                                <small>Heart-pumping cardio session</small>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="openModal('workout-modal')">View All Workouts</button>
+                </div>
+            </div>
+
+            <!-- Nutrition Tracker -->
+            <div class="feature-card">
+                <div class="feature-header">
+                    <h3>🥗 Nutrition Today</h3>
+                    <p>Track your daily intake</p>
+                </div>
+                <div class="feature-content">
+                    <div style="margin: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Daily Calories</span>
+                            <span><strong>1,850 / 2,200</strong></span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 84%"></div>
+                        </div>
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Protein</span>
+                            <span><strong>120g / 150g</strong></span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="openModal('nutrition-modal')">Log Food</button>
+                </div>
+            </div>
+
+            <!-- Coach Contact -->
+            <div class="feature-card">
+                <div class="feature-header">
+                    <h3>💬 Expert Support</h3>
+                    <p>Connect with our certified coaches</p>
+                </div>
+                <div class="feature-content">
+                    <div class="coach-contacts">
+                        <div class="coach-card">
+                            <div class="coach-info">
+                                <strong>🏋️ Coach Sarah Mitchell</strong><br>
+                                <small>Certified Fitness Specialist</small><br>
+                                <small>📧 sarah@fitlab.com</small><br>
+                                <small>📱 +250 788 123 456</small>
+                            </div>
+                            <div class="coach-actions">
+                                <button class="contact-btn" onclick="contactCoach('email', 'sarah@fitlab.com')">Email</button>
+                                <button class="contact-btn" onclick="contactCoach('phone', '+250788123456')">Call</button>
+                            </div>
+                        </div>
+                        <div class="coach-card">
+                            <div class="coach-info">
+                                <strong>🥗 Dr. James Uwimana</strong><br>
+                                <small>Licensed Nutritionist</small><br>
+                                <small>📧 james@fitlab.com</small><br>
+                                <small>📱 +250 788 654 321</small>
+                            </div>
+                            <div class="coach-actions">
+                                <button class="contact-btn" onclick="contactCoach('email', 'james@fitlab.com')">Email</button>
+                                <button class="contact-btn" onclick="contactCoach('phone', '+250788654321')">Call</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tip-box">
+                        <strong>💡 Today's Tip:</strong><br>
+                        "Stay hydrated! Aim for 8-10 glasses of water daily for optimal performance."
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Health Assistant -->
+            <div class="feature-card">
+                <div class="feature-header">
+                    <h3>🤖 AI Health Assistant</h3>
+                    <p>Smart recommendations 24/7</p>
+                </div>
+                <div class="feature-content">
+                    <p>Get instant answers to your health and fitness questions using our AI assistant.</p>
+                    <div class="ai-chat-box">
+                        <strong>Recent Question:</strong><br>
+                        "What's the best post-workout meal?"<br>
+                        <small style="color: #6c757d;">AI suggested protein-rich options with complex carbs...</small>
+                    </div>
+                    <button class="btn" onclick="openModal('ai-modal')">Ask AI Assistant</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h3>Quick Actions</h3>
+            <div class="action-buttons">
+                <a href="#" class="action-btn" onclick="startWorkout()">
+                    <span>🏃‍♂️</span>
+                    <span>Start Workout</span>
+                </a>
+                <a href="#" class="action-btn" onclick="logMeal()">
+                    <span>🍽️</span>
+                    <span>Log Meal</span>
+                </a>
+                <a href="#" class="action-btn" onclick="viewProgress()">
+                    <span>📊</span>
+                    <span>View Progress</span>
+                </a>
+                <a href="#" class="action-btn" onclick="joinCommunity()">
+                    <span>👥</span>
+                    <span>Community</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="workout-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('workout-modal')">&times;</span>
+            <h2 style="color: #2c3e50; margin-bottom: 1rem;">🎥 All Workout Videos</h2>
+            <div style="margin: 1rem 0;">
+                <h4 style="color: #00C851;">Featured Workouts</h4>
+                <div class="modal-video-list">
+                    <div class="modal-video-item" onclick="watchVideo('https://www.youtube.com/watch?v=9rKtfaZCkZQ')">
+                        <img src="https://img.youtube.com/vi/9rKtfaZCkZQ/mqdefault.jpg" alt="Weight Loss">
+                        <div>
+                            <strong>Weight Loss Workout</strong><br>
+                            <small>Full body fat burning routine</small>
+                        </div>
+                        <span class="watch-btn">Watch</span>
+                    </div>
+                    <div class="modal-video-item" onclick="watchVideo('https://www.youtube.com/watch?v=1y2pbhUCy28')">
+                        <img src="https://img.youtube.com/vi/1y2pbhUCy28/mqdefault.jpg" alt="Muscle Building">
+                        <div>
+                            <strong>Muscle Building</strong><br>
+                            <small>Strength training routine</small>
+                        </div>
+                        <span class="watch-btn">Watch</span>
+                    </div>
+                    <div class="modal-video-item" onclick="watchVideo('https://www.youtube.com/watch?v=yWnacRo2VbA')">
+                        <img src="https://img.youtube.com/vi/yWnacRo2VbA/mqdefault.jpg" alt="Cardio">
+                        <div>
+                            <strong>Cardio Workout</strong><br>
+                            <small>Heart-pumping cardio session</small>
+                        </div>
+                        <span class="watch-btn">Watch</span>
+                    </div>
+                </div>
+                <h4 style="color: #00C851; margin-top: 2rem;">Additional Routines</h4>
+                <ul style="margin: 0.5rem 0 1rem 1rem;">
+                    <li>10-Minute Morning Stretch</li>
+                    <li>Basic Bodyweight Exercises</li>
+                    <li>Advanced HIIT Training</li>
+                    <li>Yoga Flow Sessions</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="nutrition-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('nutrition-modal')">&times;</span>
+            <h2 style="color: #2c3e50; margin-bottom: 1rem;">🥗 Log Your Food</h2>
+            <form style="margin: 1rem 0;">
+                <input type="text" placeholder="Search food item (e.g., banana, ugali, beans)...">
+                <select>
+                    <option>Breakfast</option>
+                    <option>Lunch</option>
+                    <option>Dinner</option>
+                    <option>Snack</option>
+                </select>
+                <input type="number" placeholder="Portion size (grams)">
+            </form>
+            <button class="btn" onclick="closeModal('nutrition-modal')">Add Food</button>
+        </div>
+    </div>
+
+    <div id="coach-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('coach-modal')">&times;</span>
+            <h2 style="color: #2c3e50; margin-bottom: 1rem;">💬 Contact Expert Coach</h2>
+            <div style="margin: 1rem 0;">
+                <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; margin-bottom: 1rem; border-left: 4px solid #00C851;">
+                    <strong>Coach Sarah</strong> - Fitness Specialist<br>
+                    <small>Available: Mon-Fri 9AM-6PM</small>
+                </div>
+                <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; margin-bottom: 1rem; border-left: 4px solid #00C851;">
+                    <strong>Dr. James</strong> - Nutritionist<br>
+                    <small>Available: Tue, Thu, Sat 2PM-8PM</small>
+                </div>
+            </div>
+            <textarea placeholder="Type your question here..." style="height: 100px; resize: vertical;"></textarea>
+            <button class="btn" onclick="closeModal('coach-modal')">Send Message</button>
+        </div>
+    </div>
+
+    <div id="ai-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('ai-modal')">&times;</span>
+            <h2 style="color: #2c3e50; margin-bottom: 1rem;">🤖 AI Health Assistant</h2>
+            <div id="chat-messages" style="height: 300px; overflow-y: auto; border: 1px solid #e9ecef; padding: 1rem; margin: 1rem 0; border-radius: 10px; background: #f8f9fa;">
+                <div style="margin-bottom: 1rem; padding: 0.5rem; background: white; border-radius: 10px; border-left: 4px solid #00C851;">
+                    <strong>AI:</strong> Hello! I'm here to help with your health and fitness questions. What would you like to know?
+                </div>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <input type="text" id="ai-input" placeholder="Ask me anything about health and fitness..." style="flex: 1; margin: 0;">
+                <button class="btn" style="width: auto; margin: 0;" onclick="sendAIMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

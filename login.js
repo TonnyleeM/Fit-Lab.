@@ -36,14 +36,22 @@ function setupEventListeners() {
     const passwordInput = document.getElementById('password');
     
     // Form submission
-    loginForm.addEventListener('submit', handleLogin);
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+    }
     
     // Password visibility toggle
-    passwordToggle.addEventListener('click', togglePasswordVisibility);
+    if (passwordToggle) {
+        passwordToggle.addEventListener('click', togglePasswordVisibility);
+    }
     
     // Input validation
-    emailInput.addEventListener('blur', validateEmail);
-    passwordInput.addEventListener('input', validatePassword);
+    if (emailInput) {
+        emailInput.addEventListener('blur', validateEmail);
+    }
+    if (passwordInput) {
+        passwordInput.addEventListener('input', validatePassword);
+    }
     
     // Enter key handling
     document.addEventListener('keydown', function(e) {
@@ -69,7 +77,7 @@ async function verifyTokenAndRedirect() {
         if (data.success) {
             showMessage('You are already logged in. Redirecting to dashboard...', 'success');
             setTimeout(() => {
-                window.location.href = 'dashboard.html';
+                window.location.href = 'Dashboard/dashboard.html'; // Updated path
             }, 1500);
         } else {
             // Invalid token, remove it
@@ -87,9 +95,18 @@ async function verifyTokenAndRedirect() {
 async function handleLogin(e) {
     e.preventDefault();
     
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
-    const remember = document.getElementById('remember').checked;
+    const emailElement = document.getElementById('email');
+    const passwordElement = document.getElementById('password');
+    const rememberElement = document.getElementById('remember');
+    
+    if (!emailElement || !passwordElement) {
+        showMessage('Login form elements not found', 'error');
+        return;
+    }
+    
+    const email = emailElement.value.trim();
+    const password = passwordElement.value;
+    const remember = rememberElement ? rememberElement.checked : false;
     
     // Validation
     if (!email || !password) {
@@ -106,6 +123,8 @@ async function handleLogin(e) {
         showLoading(true);
         setButtonLoading(true);
         
+        console.log('Attempting login with:', { email }); // Don't log password
+        
         const response = await fetch(`${API_BASE_URL}/auth/login`, {
             method: 'POST',
             headers: {
@@ -115,6 +134,7 @@ async function handleLogin(e) {
         });
         
         const data = await response.json();
+        console.log('Login response:', data);
         
         if (data.success) {
             // Store user data and token
@@ -130,7 +150,7 @@ async function handleLogin(e) {
             
             // Redirect to dashboard
             setTimeout(() => {
-                window.location.href = 'dashboard.html';
+                window.location.href = 'Dashboard/dashboard.html';
             }, 1500);
             
         } else {
@@ -151,18 +171,22 @@ function togglePasswordVisibility() {
     const passwordInput = document.getElementById('password');
     const toggleIcon = document.getElementById('password-toggle-icon');
     
+    if (!passwordInput) return;
+    
     if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
-        toggleIcon.textContent = '🙈';
+        if (toggleIcon) toggleIcon.textContent = '🙈';
     } else {
         passwordInput.type = 'password';
-        toggleIcon.textContent = '👁️';
+        if (toggleIcon) toggleIcon.textContent = '👁️';
     }
 }
 
 // Email validation
 function validateEmail() {
     const emailInput = document.getElementById('email');
+    if (!emailInput) return true;
+    
     const email = emailInput.value.trim();
     
     if (email && !isValidEmail(email)) {
@@ -178,6 +202,8 @@ function validateEmail() {
 // Password validation
 function validatePassword() {
     const passwordInput = document.getElementById('password');
+    if (!passwordInput) return true;
+    
     const password = passwordInput.value;
     
     if (password && password.length < 6) {
@@ -198,7 +224,9 @@ function isValidEmail(email) {
 // Show loading overlay
 function showLoading(show) {
     const overlay = document.getElementById('loading-overlay');
-    overlay.style.display = show ? 'flex' : 'none';
+    if (overlay) {
+        overlay.style.display = show ? 'flex' : 'none';
+    }
 }
 
 // Set button loading state
@@ -207,28 +235,57 @@ function setButtonLoading(loading) {
     const buttonText = document.getElementById('login-btn-text');
     const loader = document.getElementById('login-loader');
     
-    if (loading) {
-        button.disabled = true;
-        buttonText.style.display = 'none';
-        loader.style.display = 'inline-block';
-    } else {
-        button.disabled = false;
-        buttonText.style.display = 'inline';
-        loader.style.display = 'none';
+    if (button) {
+        button.disabled = loading;
+    }
+    
+    if (buttonText) {
+        buttonText.style.display = loading ? 'none' : 'inline';
+    }
+    
+    if (loader) {
+        loader.style.display = loading ? 'inline-block' : 'none';
     }
 }
 
 // Show message
 function showMessage(text, type) {
     const messageDiv = document.getElementById('message');
-    messageDiv.textContent = text;
-    messageDiv.className = `message ${type}`;
-    messageDiv.style.display = 'block';
+    if (!messageDiv) {
+        // Create message div if it doesn't exist
+        const newMessageDiv = document.createElement('div');
+        newMessageDiv.id = 'message';
+        newMessageDiv.style.cssText = `
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 500;
+        `;
+        document.body.appendChild(newMessageDiv);
+    }
+    
+    const targetDiv = document.getElementById('message');
+    targetDiv.textContent = text;
+    targetDiv.className = `message ${type}`;
+    
+    // Style based on type
+    if (type === 'success') {
+        targetDiv.style.backgroundColor = '#d4edda';
+        targetDiv.style.color = '#155724';
+        targetDiv.style.border = '1px solid #c3e6cb';
+    } else if (type === 'error') {
+        targetDiv.style.backgroundColor = '#f8d7da';
+        targetDiv.style.color = '#721c24';
+        targetDiv.style.border = '1px solid #f5c6cb';
+    }
+    
+    targetDiv.style.display = 'block';
     
     // Auto-hide success messages
     if (type === 'success') {
         setTimeout(() => {
-            messageDiv.style.display = 'none';
+            targetDiv.style.display = 'none';
         }, 5000);
     }
 }
@@ -281,15 +338,17 @@ async function loadSuccessStory() {
         ];
         
         const randomStory = stories[Math.floor(Math.random() * stories.length)];
-        document.getElementById('success-story').innerHTML = `
-            <p>${randomStory}</p>
-        `;
+        const storyElement = document.getElementById('success-story');
+        if (storyElement) {
+            storyElement.innerHTML = `<p>${randomStory}</p>`;
+        }
         
     } catch (error) {
         console.error('Error loading success story:', error);
-        document.getElementById('success-story').innerHTML = `
-            <p>Join thousands of successful Fit Lab members on their fitness journey!</p>
-        `;
+        const storyElement = document.getElementById('success-story');
+        if (storyElement) {
+            storyElement.innerHTML = `<p>Join thousands of successful Fit Lab members on their fitness journey!</p>`;
+        }
     }
 }
 
@@ -305,15 +364,17 @@ async function loadHealthTip() {
         ];
         
         const randomTip = tips[Math.floor(Math.random() * tips.length)];
-        document.getElementById('health-tip').innerHTML = `
-            <p><strong>💡 Tip:</strong> ${randomTip}</p>
-        `;
+        const tipElement = document.getElementById('health-tip');
+        if (tipElement) {
+            tipElement.innerHTML = `<p><strong>💡 Tip:</strong> ${randomTip}</p>`;
+        }
         
     } catch (error) {
         console.error('Error loading health tip:', error);
-        document.getElementById('health-tip').innerHTML = `
-            <p>Stay consistent with small daily actions for big long-term results!</p>
-        `;
+        const tipElement = document.getElementById('health-tip');
+        if (tipElement) {
+            tipElement.innerHTML = `<p>Stay consistent with small daily actions for big long-term results!</p>`;
+        }
     }
 }
 
@@ -363,15 +424,26 @@ function animateNumber(elementId, targetNumber, suffix = '') {
 
 // Handle demo login
 function loginDemo() {
-    document.getElementById('email').value = 'demo@fitlab.com';
-    document.getElementById('password').value = 'demo123';
+    const emailElement = document.getElementById('email');
+    const passwordElement = document.getElementById('password');
     
-    // Trigger form submission
-    const form = document.getElementById('login-form');
-    form.dispatchEvent(new Event('submit'));
+    if (emailElement && passwordElement) {
+        emailElement.value = 'demo@fitlab.com';
+        passwordElement.value = 'demo123';
+        
+        // Trigger form submission
+        const form = document.getElementById('login-form');
+        if (form) {
+            form.dispatchEvent(new Event('submit'));
+        }
+    }
 }
 
 // Keyboard shortcuts
 document.addEventListener('keydown', function(e) {
     // Ctrl/Cmd + D for demo login (development only)
-    if ((e.ctrlKey || e.metaKey) &&
+    if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+        e.preventDefault();
+        loginDemo();
+    }
+});
