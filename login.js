@@ -1,5 +1,5 @@
 // API Configuration
-const API_BASE_URL = 'https://your-render-backend-url.onrender.com/api';
+const API_BASE_URL = 'https://fitlab-backend-4ct4.onrender.com/api';
 
 // Initialize login page
 document.addEventListener('DOMContentLoaded', function() {

@@ -21,7 +21,7 @@ function checkAuthenticationAndRedirect() {
 async function verifyAuthTokenAndUser() {
     try {
         const token = localStorage.getItem('fitlab_token');
-        const response = await fetch('https://your-render-backend-url.onrender.com/api/auth/verify', {
+        const response = await fetch('https://fitlab-backend-4ct4.onrender.com/api/auth/verify', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,

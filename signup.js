@@ -144,7 +144,7 @@ async function handleSignup(e) {
     // The backend API endpoint must match the running Node.js server
     console.log('Submitting registration data:', { name, age, email, password, fitnessGoal, experience, workoutTime, dietaryPreference });
     try {
-        const response = await fetch('https://your-render-backend-url.onrender.com/api/auth/register', {
+        const response = await fetch('https://fitlab-backend-4ct4.onrender.com/api/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
