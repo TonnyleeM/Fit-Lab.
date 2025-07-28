@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Back - Fit Lab</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html"><h2>Fit Lab</h2></a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Login Section -->
+    <section class="login-section">
+        <div class="login-container">
+            <div class="login-left">
+                <h1>Welcome Back to Your Fitness Journey</h1>
+                <p>Continue your transformation with personalized workouts, nutrition guidance, and community support.</p>
+                
+                <!-- Motivational stats -->
+                <div class="welcome-stats">
+                    <div class="welcome-stat">
+                        <div class="stat-icon">🔥</div>
+                        <div class="stat-content">
+                            <h4 id="active-users">1,247</h4>
+                            <p>Active members today</p>
+                        </div>
+                    </div>
+                    <div class="welcome-stat">
+                        <div class="stat-icon">💪</div>
+                        <div class="stat-content">
+                            <h4 id="workouts-today">456</h4>
+                            <p>Workouts completed today</p>
+                        </div>
+                    </div>
+                    <div class="welcome-stat">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-content">
+                            <h4 id="goals-achieved">89%</h4>
+                            <p>Goals achieved this month</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Success stories preview -->
+                <div class="success-preview">
+                    <h3>🌟 Member Success Story</h3>
+                    <div id="success-story" class="success-story">
+                        <div class="loading">Loading inspiring story...</div>
+                    </div>
+                </div>
+
+                <!-- Quick tips -->
+                <div class="quick-tips">
+                    <h3>💡 Today's Health Tip</h3>
+                    <div id="health-tip" class="health-tip">
+                        <div class="loading">Loading health tip...</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="login-right">
+                <div class="login-form-container">
+                    <div class="form-header">
+                        <h2>Sign In to Your Account</h2>
+                        <p class="form-subtitle">Continue your fitness journey where you left off</p>
+                    </div>
+                    
+                    <form id="login-form" class="login-form">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                            <div class="input-icon">📧</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="password-input-container">
+                                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                                <button type="button" class="password-toggle" id="password-toggle">
+                                    <span id="password-toggle-icon">👁️</span>
+                                </button>
+                            </div>
+                            <div class="input-icon">🔒</div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="remember-me">
+                                <input type="checkbox" name="remember" id="remember">
+                                <span class="checkmark"></span>
+                                Remember me
+                            </label>
+                            <a href="#" class="forgot-password">Forgot password?</a>
+                        </div>
+
+                        <button type="submit" class="login-button">
+                            <span id="login-btn-text">Sign In to Dashboard</span>
+                            <div id="login-loader" class="button-loader" style="display: none;"></div>
+                        </button>
+
+                        <!-- Demo credentials info -->
+                        <div class="demo-info">
+                            <p><strong>Demo Account:</strong></p>
+                            <p>Email: demo@fitlab.com</p>
+                            <p>Password: demo123</p>
+                        </div>
+                    </form>
+
+                    <div class="form-divider">
+                        <span>or</span>
+                    </div>
+
+                    <div class="social-login">
+                        <button class="social-btn google-btn" disabled>
+                            <span>🌐</span>
+                            Continue with Google
+                        </button>
+                        <p class="social-note">Social login coming soon!</p>
+                    </div>
+
+                    <div class="form-footer">
+                        <p>New to Fit Lab? <a href="signup.html">Create your free account</a></p>
+                        <p class="help-text">Need help? <a href="mailto:support@fitlab.com">Contact Support</a></p>
+                    </div>
+
+                    <!-- Success/Error Messages -->
+                    <div id="message" class="message" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Signing you in...</p>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Fit Lab - Start Your Fitness Journey</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html"><h2>Fit Lab</h2></a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Signup Section -->
+    <section class="signup-section">
+        <div class="signup-container">
+            <div class="signup-left">
+                <h1>Start Your Fitness Journey Today</h1>
+                <p>Join thousands of Rwandan youth transforming their health with personalized workout plans and real-time nutrition data.</p>
+                
+                <!-- Real-time nutrition data preview -->
+                <div class="nutrition-preview">
+                    <h3>🥗 Today's Nutrition Insight</h3>
+                    <div id="nutrition-fact" class="nutrition-fact">
+                        <div class="loading">Loading nutrition data...</div>
+                    </div>
+                </div>
+
+                <!-- Exercise tip preview -->
+                <div class="exercise-preview">
+                    <h3>💪 Daily Exercise Tip</h3>
+                    <div id="exercise-tip" class="exercise-tip">
+                        <div class="loading">Loading exercise tip...</div>
+                    </div>
+                </div>
+
+                <!-- Health stats -->
+                <div class="health-stats">
+                    <div class="stat">
+                        <h4 id="calorie-stat">2000</h4>
+                        <p>Avg. Daily Calories</p>
+                    </div>
+                    <div class="stat">
+                        <h4 id="workout-stat">45</h4>
+                        <p>Min. Workout Time</p>
+                    </div>
+                    <div class="stat">
+                        <h4 id="users-stat">1,247</h4>
+                        <p>Active Users</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="signup-right">
+                <div class="signup-form-container">
+                    <h2>Create Your Account</h2>
+                    <p class="form-subtitle">Get personalized fitness plans and nutrition guidance</p>
+                    
+                    <form id="signup-form" class="signup-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="age">Age</label>
+                                <input type="number" id="age" name="age" placeholder="Age" min="15" max="35" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fitness-goal">Primary Fitness Goal</label>
+                            <select id="fitness-goal" name="fitnessGoal" required>
+                                <option value="">Select your main goal</option>
+                                <option value="weight-loss">Weight Loss</option>
+                                <option value="muscle-gain">Muscle Gain</option>
+                                <option value="general-fitness">General Fitness</option>
+                                <option value="strength">Strength Training</option>
+                                <option value="endurance">Endurance & Cardio</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="experience">Current Fitness Level</label>
+                            <select id="experience" name="experience" required>
+                                <option value="">Select your level</option>
+                                <option value="beginner">Beginner (Just starting)</option>
+                                <option value="intermediate">Intermediate (Some experience)</option>
+                                <option value="advanced">Advanced (Regular workouts)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="workout-time">Available Workout Time</label>
+                            <select id="workout-time" name="workoutTime" required>
+                                <option value="">How much time can you dedicate?</option>
+                                <option value="15-30">15-30 minutes daily</option>
+                                <option value="30-45">30-45 minutes daily</option>
+                                <option value="45-60">45-60 minutes daily</option>
+                                <option value="60+">More than 1 hour daily</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dietary-preference">Dietary Preference</label>
+                            <select id="dietary-preference" name="dietaryPreference">
+                                <option value="omnivore">Omnivore (All foods)</option>
+                                <option value="vegetarian">Vegetarian</option>
+                                <option value="vegan">Vegan</option>
+                                <option value="pescatarian">Pescatarian</option>
+                                <option value="traditional">Traditional Rwandan Diet</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Create Password</label>
+                            <input type="password" id="password" name="password" placeholder="Create a strong password" required>
+                            <small>Password should be at least 6 characters long</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm Password</label>
+                            <input type="password" id="confirm-password" name="confirmPassword" placeholder="Confirm your password" required>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="terms" required>
+                                <span class="checkmark"></span>
+                                I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>
+                            </label>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="newsletter">
+                                <span class="checkmark"></span>
+                                Send me weekly fitness tips and nutrition updates
+                            </label>
+                        </div>
+
+                        <button type="submit" class="signup-button">
+                            <span id="signup-btn-text">Create My Account</span>
+                            <div id="signup-loader" class="button-loader" style="display: none;"></div>
+                        </button>
+                    </form>
+
+                    <div class="form-footer">
+                        <p>Already have an account? <a href="login.html">Sign in here</a></p>
+                    </div>
+
+                    <!-- Success/Error Messages -->
+                    <div id="message" class="message" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="signup.js"></script>
+</body>
+</html>

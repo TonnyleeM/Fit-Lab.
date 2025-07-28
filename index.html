@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fit Lab - Your Health Journey Starts Here</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h2>Fit Lab</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="dashboard.html" id="dashboard-link" style="display: none;">Dashboard</a></li>
+                <li><a href="signup.html" id="auth-link">Sign Up</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Transform Your Health, Transform Your Life</h1>
+            <p>Join thousands of Rwandan youth on their fitness journey. Get personalized workout plans, nutrition guidance, and community support with real-time health data.</p>
+            <a href="signup.html" class="cta-button" id="start-journey">Start My Fitness Plan</a>
+        </div>
+        <div class="hero-image">
+            <div class="hero-placeholder">💪 Fitness Journey Starts Here</div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>Empowering Rwanda's Youth for Better Health</h2>
+            <p>Fit Lab addresses the rising concerns of non-communicable diseases among youth by providing accessible fitness routines, real-time nutrition data, and a supportive community platform.</p>
+            <div class="stats">
+                <div class="stat">
+                    <h3>1000+</h3>
+                    <p>Active Users</p>
+                </div>
+                <div class="stat">
+                    <h3>50+</h3>
+                    <p>Workout Plans</p>
+                </div>
+                <div class="stat">
+                    <h3>24/7</h3>
+                    <p>Community Support</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Everything You Need for Your Fitness Journey</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🏋️</div>
+                    <h3>Personalized Workouts</h3>
+                    <p>Get custom workout plans based on your goals, fitness level, and available time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🥗</div>
+                    <h3>Nutrition Guidance</h3>
+                    <p>Access real-time nutrition data, discover healthy Rwandan meals, and get personalized dietary recommendations from our nutrition API.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Community Support</h3>
+                    <p>Connect with like-minded individuals and get motivation from our fitness community.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Progress Tracking</h3>
+                    <p>Monitor your fitness journey with detailed progress tracking and analytics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Start Your Transformation?</h2>
+            <p>Join Fit Lab today and take the first step towards a healthier you.</p>
+            <a href="signup.html" class="cta-button" id="join-now">Join Now - It's Free!</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Fit Lab</h3>
+                    <p>Empowering youth for better health through accessible fitness and nutrition.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#features">Features</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: info@fitlabrwanda.com</p>
+                    <p>Phone: +250 xxx xxx xxx</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Fit Lab. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Sign Up Modal -->
+    <div id="signup-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Join FitConnect Rwanda</h2>
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" min="15" max="35" required>
+                </div>
+                <div class="form-group">
+                    <label for="fitness-goal">Fitness Goal</label>
+                    <select id="fitness-goal" name="fitnessGoal" required>
+                        <option value="">Select your goal</option>
+                        <option value="weight-loss">Weight Loss</option>
+                        <option value="muscle-gain">Muscle Gain</option>
+                        <option value="general-fitness">General Fitness</option>
+                        <option value="strength">Strength Training</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="experience">Experience Level</label>
+                    <select id="experience" name="experience" required>
+                        <option value="">Select your level</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Create Account</button>
+            </form>
+            <p class="switch-form">Already have an account? <a href="#" id="show-login">Login here</a></p>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Welcome Back!</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <p class="switch-form">Don't have an account? <a href="#" id="show-signup">Sign up here</a></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
