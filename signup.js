@@ -168,7 +168,7 @@ async function handleSignup(e) {
             messageBox.textContent = '✅ Account created successfully! Redirecting to login...';
             messageBox.style.display = 'block';
             setTimeout(() => {
-                window.location.href = "Dashboard/dashboard.html";
+                window.location.href = "login.html";
             }, 2000);
         } else {
             messageBox.className = 'message error';

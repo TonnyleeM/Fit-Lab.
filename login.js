@@ -133,18 +133,28 @@ async function handleLogin(e) {
             body: JSON.stringify({ email, password })
         });
         
-        const data = await response.json();
+        let data;
+        if (response.ok) {
+            data = await response.json();
+        } else {
+            // Try to parse error as JSON, fallback to text
+            try {
+                data = await response.json();
+            } catch (e) {
+                const text = await response.text();
+                showMessage(`Server error: ${response.status} - ${text}`, 'error');
+                return;
+            }
+            showMessage(data.message || `Login failed. Server returned status ${response.status}.`, 'error');
+            return;
+        }
+        
         console.log('Login response:', data);
         
-        if (data.success) {
-            // Store user data and token
-            localStorage.setItem('fitlab_token', data.token);
-            localStorage.setItem('fitlab_user', JSON.stringify(data.user));
-            
-            // Store remember me preference
-            if (remember) {
-                localStorage.setItem('fitlab_remember', 'true');
-            }
+        if (data.success || data.message === 'Login successful!') {
+            // Store user data and token if provided
+            if (data.token) localStorage.setItem('fitlab_token', data.token);
+            if (data.user) localStorage.setItem('fitlab_user', JSON.stringify(data.user));
             
             showMessage('Login successful! Welcome back to Fit Lab!', 'success');
             
@@ -152,14 +162,12 @@ async function handleLogin(e) {
             setTimeout(() => {
                 window.location.href = 'Dashboard/dashboard.html';
             }, 1500);
-            
         } else {
             showMessage(data.message || 'Login failed. Please check your credentials.', 'error');
         }
-        
     } catch (error) {
         console.error('Login error:', error);
-        showMessage('Network error. Please check your connection and try again.', 'error');
+        showMessage('Network or server error. Please try again.', 'error');
     } finally {
         showLoading(false);
         setButtonLoading(false);
